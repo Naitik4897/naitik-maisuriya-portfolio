@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://naitikmaisuriya.com/sitemap.xml
+
+# Allow all main pages for indexing
+Allow: /about
+Allow: /skills
+Allow: /experience
+Allow: /projects
+Allow: /services
+Allow: /blog
+Allow: /certifications
+Allow: /contact
+
+# Block admin areas and private files
+Disallow: /admin/
+Disallow: /api/
+Disallow: /.env
+Disallow: /temp/
+Disallow: /cache/
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
