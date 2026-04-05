@@ -59,7 +59,6 @@ export const sendToEmail = async (data: ContactFormData): Promise<boolean> => {
  */
 export const sendToWhatsApp = (data: ContactFormData): void => {
   // WhatsApp message preparation (for logging/future use)
-  const whatsappNumber = '918485939130';
   const message = `
 Hi Naitik! 👋
 

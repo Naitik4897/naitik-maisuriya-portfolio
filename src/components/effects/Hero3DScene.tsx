@@ -10,8 +10,7 @@ import {
   OrbitControls,
   Stars,
   Trail,
-  MeshWobbleMaterial,
-  GradientTexture
+  MeshWobbleMaterial
 } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -228,8 +227,8 @@ const DNAHelix: React.FC<{
             <meshStandardMaterial color="#7B2FFF" emissive="#7B2FFF" emissiveIntensity={1} />
           </mesh>
           {i % 3 === 0 && (
-            <mesh position={[(p.position1[0] + p.position2[0]) / 2, p.position1[1], (p.position1[2] + p.position2[2]) / 2]}>
-              <cylinderGeometry args={[0.01, 0.01, 0.8, 8]} rotation={[0, 0, Math.PI / 2]} />
+            <mesh position={[(p.position1[0] + p.position2[0]) / 2, p.position1[1], (p.position1[2] + p.position2[2]) / 2]} rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={[0.01, 0.01, 0.8, 8]} />
               <meshStandardMaterial color="#ffffff" transparent opacity={0.3} />
             </mesh>
           )}

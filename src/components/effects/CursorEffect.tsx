@@ -1,21 +1,34 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface CursorEffectProps {
   enabled?: boolean;
 }
 
 const CursorEffect: React.FC<CursorEffectProps> = ({ enabled = true }) => {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mq.matches);
+    const onChange = () => setPrefersReducedMotion(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
   const cursorRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
   const positionRef = useRef({ x: 0, y: 0 });
   const targetRef = useRef({ x: 0, y: 0 });
   const isVisibleRef = useRef(false);
   const isPointerRef = useRef(false);
+  const isTextFieldRef = useRef(false);
   const isClickingRef = useRef(false);
   const rafRef = useRef<number>();
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || prefersReducedMotion) return;
 
     const cursor = cursorRef.current;
     const dot = dotRef.current;
@@ -24,7 +37,7 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ enabled = true }) => {
     // Smooth animation loop using direct DOM manipulation
     const animate = () => {
       // Smooth interpolation (lerp) - higher value = faster follow
-      const ease = 0.15;
+      const ease = 0.2;
       
       positionRef.current.x += (targetRef.current.x - positionRef.current.x) * ease;
       positionRef.current.y += (targetRef.current.y - positionRef.current.y) * ease;
@@ -33,11 +46,17 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ enabled = true }) => {
       const x = positionRef.current.x;
       const y = positionRef.current.y;
       
-      cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${isClickingRef.current ? 0.8 : isPointerRef.current ? 1.3 : 1})`;
+      const pointerScale = isTextFieldRef.current ? 0.5 : isPointerRef.current ? 1.35 : 1;
+      cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${isClickingRef.current ? 0.75 : pointerScale})`;
       dot.style.transform = `translate3d(${targetRef.current.x}px, ${targetRef.current.y}px, 0) translate(-50%, -50%)`;
 
       // Update pointer state styling
-      if (isPointerRef.current) {
+      if (isTextFieldRef.current) {
+        cursor.style.borderColor = 'rgba(0, 212, 255, 0.35)';
+        cursor.style.background = 'rgba(0, 212, 255, 0.02)';
+        dot.style.background = '#00D4FF';
+        dot.style.boxShadow = '0 0 8px rgba(0, 212, 255, 0.5)';
+      } else if (isPointerRef.current) {
         cursor.style.borderColor = '#7B2FFF';
         cursor.style.background = 'rgba(123, 47, 255, 0.1)';
         dot.style.background = '#7B2FFF';
@@ -62,15 +81,30 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ enabled = true }) => {
         dot.style.opacity = '1';
       }
 
-      // Check if hovering over a clickable element
       const target = e.target as HTMLElement;
-      isPointerRef.current = !!(
-        target.tagName === 'A' ||
-        target.tagName === 'BUTTON' ||
-        target.closest('a') ||
-        target.closest('button') ||
-        window.getComputedStyle(target).cursor === 'pointer'
+      const textField = target.closest(
+        'textarea, select, [contenteditable="true"], input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"])'
       );
+      isTextFieldRef.current = !!textField;
+
+      isPointerRef.current = !!(
+        !isTextFieldRef.current &&
+        (target.tagName === 'A' ||
+          target.tagName === 'BUTTON' ||
+          target.closest('a') ||
+          target.closest('button') ||
+          target.closest('[role="button"]') ||
+          target.closest('[data-cursor="pointer"]') ||
+          target.closest('summary') ||
+          target.closest('label[for]') ||
+          window.getComputedStyle(target).cursor === 'pointer')
+      );
+
+      if (isTextFieldRef.current) {
+        document.body.style.cursor = 'text';
+      } else {
+        document.body.style.cursor = 'none';
+      }
     };
 
     const handleMouseDown = () => {
@@ -113,16 +147,16 @@ const CursorEffect: React.FC<CursorEffectProps> = ({ enabled = true }) => {
       document.removeEventListener('mouseup', handleMouseUp);
       document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
       document.documentElement.removeEventListener('mouseenter', handleMouseEnter);
-      
+
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
       
       document.body.style.cursor = '';
     };
-  }, [enabled]);
+  }, [enabled, prefersReducedMotion]);
 
-  if (!enabled) return null;
+  if (!enabled || prefersReducedMotion) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999]">

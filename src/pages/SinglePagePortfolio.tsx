@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { 
-  ArrowRight, Download, Code2, Database, Globe, Server, Smartphone, Terminal, Braces, 
-  Layers, GitBranch, Cloud, ExternalLink, Github, Mail, Phone, MapPin, Send, 
-  Linkedin, Twitter, Clock, MessageSquare, CheckCircle2, Loader2, Calendar, Coffee,
-  MessageCircle, Award, TrendingUp, Users, Briefcase, Target, Heart, Rocket, Star,
-  ChevronRight, ChevronDown, Wrench, ArrowUp
+  ArrowRight, Download, Code2, Database, Globe, Server, Terminal, 
+  Layers, Cloud, ExternalLink, Github, Mail, MapPin, 
+  Linkedin, Twitter, Clock, CheckCircle2, Loader2, Calendar, Coffee,
+  MessageCircle, Award, Users, Briefcase, Target, Heart, Rocket,
+  Wrench, ArrowUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDocumentMeta } from '@/hooks';
@@ -18,16 +18,14 @@ import {
   DiJavascript1, DiHtml5, DiCss3, DiReact, DiNodejsSmall, DiMongodb, DiPostgresql, DiMysql, DiRedis,
   DiDocker, DiGit, DiGithubBadge
 } from 'react-icons/di';
-import { FaDatabase, FaAws, FaFigma, FaMobileAlt, FaServer, FaCogs, FaPaintBrush, FaLock, FaWind, FaRocket, FaPlug, FaCode } from 'react-icons/fa';
+import { FaDatabase, FaAws, FaFigma, FaMobileAlt, FaServer, FaCogs, FaPaintBrush, FaLock, FaWind, FaRocket, FaPlug } from 'react-icons/fa';
 import { 
   SiTypescript, SiNextdotjs, SiTailwindcss, SiRedux, SiFramer,
-  SiExpress, SiGraphql, SiSocketdotio, SiJsonwebtokens, SiAuth0, SiTwilio,
-  SiVercel, SiRailway, SiCloudinary, SiPostman, SiDrizzle, SiResend, SiWebsocket, SiPwa, SiCursor
+  SiExpress, SiGraphql, SiSocketdotio, SiJsonwebtokens, SiTwilio,
+  SiVercel, SiRailway, SiCloudinary, SiPostman
 } from 'react-icons/si';
-import { HiOutlineStatusOnline } from 'react-icons/hi';
-import { BsBullseye, BsUiChecksGrid, BsGithub } from 'react-icons/bs';
+import { BsUiChecksGrid, BsGithub } from 'react-icons/bs';
 import { VscCode, VscAzureDevops } from 'react-icons/vsc';
-import { TbBrandOauth } from 'react-icons/tb';
 
 // ============ DATA ============
 
@@ -96,104 +94,6 @@ const techStack = {
   ],
 };
 
-// Skills categories for grid display
-const skillCategories = [
-  {
-    id: 'languages',
-    title: 'Languages',
-    icon: Code2,
-    skills: [
-      { name: 'JavaScript (ES6+)', Icon: DiJavascript1, color: '#F7DF1E', level: 95 },
-      { name: 'TypeScript', Icon: SiTypescript, color: '#3178C6', level: 90 },
-      { name: 'HTML5', Icon: DiHtml5, color: '#E34F26', level: 95 },
-      { name: 'CSS3', Icon: DiCss3, color: '#1572B6', level: 92 },
-      { name: 'SQL', Icon: FaDatabase, color: '#4479A1', level: 85 },
-    ],
-  },
-  {
-    id: 'frontend',
-    title: 'Frontend',
-    icon: Globe,
-    skills: [
-      { name: 'React.js', Icon: DiReact, color: '#61DAFB', level: 95 },
-      { name: 'Next.js', Icon: SiNextdotjs, color: '#ffffff', level: 88 },
-      { name: 'Tailwind CSS', Icon: SiTailwindcss, color: '#06B6D4', level: 95 },
-      { name: 'shadcn/ui', Icon: BsUiChecksGrid, color: '#ffffff', level: 90 },
-      { name: 'Zustand', Icon: FaCogs, color: '#433D37', level: 85 },
-      { name: 'Redux', Icon: SiRedux, color: '#764ABC', level: 85 },
-      { name: 'Framer Motion', Icon: SiFramer, color: '#FF0055', level: 88 },
-      { name: 'PWA', Icon: FaMobileAlt, color: '#5A0FC8', level: 80 },
-    ],
-  },
-  {
-    id: 'backend',
-    title: 'Backend',
-    icon: Server,
-    skills: [
-      { name: 'Node.js', Icon: DiNodejsSmall, color: '#339933', level: 92 },
-      { name: 'Express.js', Icon: SiExpress, color: '#ffffff', level: 90 },
-      { name: 'REST APIs', Icon: FaServer, color: '#FF6C37', level: 95 },
-      { name: 'GraphQL', Icon: SiGraphql, color: '#E10098', level: 82 },
-      { name: 'WebSocket', Icon: FaPlug, color: '#ffffff', level: 85 },
-      { name: 'Socket.io', Icon: SiSocketdotio, color: '#ffffff', level: 85 },
-      { name: 'JWT', Icon: SiJsonwebtokens, color: '#ffffff', level: 90 },
-      { name: 'OAuth 2.0', Icon: FaLock, color: '#EB5424', level: 85 },
-      { name: 'Bull Queue', Icon: FaRocket, color: '#E53935', level: 78 },
-      { name: 'Twilio', Icon: SiTwilio, color: '#F22F46', level: 80 },
-      { name: 'Drizzle ORM', Icon: FaDatabase, color: '#C5F74F', level: 82 },
-    ],
-  },
-  {
-    id: 'databases',
-    title: 'Databases',
-    icon: Database,
-    skills: [
-      { name: 'MongoDB', Icon: DiMongodb, color: '#47A248', level: 88 },
-      { name: 'PostgreSQL', Icon: DiPostgresql, color: '#336791', level: 85 },
-      { name: 'MySQL', Icon: DiMysql, color: '#4479A1', level: 90 },
-      { name: 'Redis', Icon: DiRedis, color: '#DC382D', level: 78 },
-    ],
-  },
-  {
-    id: 'devops',
-    title: 'Cloud & DevOps',
-    icon: Cloud,
-    skills: [
-      { name: 'Docker', Icon: DiDocker, color: '#2496ED', level: 82 },
-      { name: 'GitHub Actions (CI/CD)', Icon: BsGithub, color: '#2088FF', level: 85 },
-      { name: 'Vercel', Icon: SiVercel, color: '#ffffff', level: 92 },
-      { name: 'Railway', Icon: SiRailway, color: '#ffffff', level: 85 },
-      { name: 'AWS', Icon: FaAws, color: '#FF9900', level: 75 },
-      { name: 'Azure DevOps', Icon: VscAzureDevops, color: '#0078D7', level: 78 },
-      { name: 'Cloudinary', Icon: SiCloudinary, color: '#3448C5', level: 88 },
-    ],
-  },
-  {
-    id: 'tools',
-    title: 'Tools',
-    icon: Wrench,
-    skills: [
-      { name: 'Git', Icon: DiGit, color: '#F05032', level: 95 },
-      { name: 'GitHub', Icon: DiGithubBadge, color: '#ffffff', level: 95 },
-      { name: 'Postman', Icon: SiPostman, color: '#FF6C37', level: 90 },
-      { name: 'Figma', Icon: FaFigma, color: '#F24E1E', level: 82 },
-      { name: 'VS Code', Icon: VscCode, color: '#007ACC', level: 95 },
-      { name: 'Antigravity', Icon: FaRocket, color: '#6366F1', level: 85 },
-      { name: 'Cursor', Icon: Code2, color: '#00D4FF', level: 88 },
-      { name: 'Windsurf', Icon: FaWind, color: '#38BDF8', level: 85 },
-    ],
-  },
-  {
-    id: 'other',
-    title: 'Other',
-    icon: Layers,
-    skills: [
-      { name: 'System Design', Icon: FaCogs, color: '#9333EA', level: 80 },
-      { name: 'UI/UX Principles', Icon: FaPaintBrush, color: '#EC4899', level: 85 },
-      { name: 'Security', Icon: FaLock, color: '#22C55E', level: 82 },
-    ],
-  },
-];
 
 // Flattened tech stack for marquee
 const techStackFlat = [
@@ -339,7 +239,7 @@ const featuredProjectsData: Project[] = [
     liveUrl: '',
     githubUrl: '',
     featured: true,
-    category: 'FinTech',
+    category: 'Web App',
     createdAt: '2024-10-01',
   },
   {
@@ -394,6 +294,120 @@ const values = [
   { icon: Target, title: 'Quality', description: 'Committed to delivering high-quality code' },
 ];
 
+// ============ ENHANCED PROJECT CARD COMPONENTS ============
+
+// Enhanced Grid Project Card
+const EnhancedProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/55 bg-gradient-to-b from-cardBg to-[#0c0c18] shadow-[0_20px_50px_-28px_rgba(0,0,0,0.85)] transition-all duration-500 hover:-translate-y-2 hover:border-primary-cyan/35 hover:shadow-[0_32px_80px_-24px_rgba(0,212,255,0.25)]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Project Image - Fixed height */}
+      <div className="relative h-48 w-full overflow-hidden flex-shrink-0">
+        <img
+          src={project.thumbnail || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&h=560&fit=crop`}
+          alt={project.title}
+          className={`h-full w-full object-cover transition-all duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+          loading="lazy"
+        />
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c18] via-transparent to-transparent opacity-80" />
+        
+        {/* Category Badge */}
+        <div className="absolute top-4 left-4">
+          <span className="inline-flex items-center rounded-full border border-primary-cyan/35 bg-cardBg/95 backdrop-blur-md px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary-cyan">
+            {project.category}
+          </span>
+        </div>
+
+        {/* Featured Badge */}
+        {project.featured && (
+          <div className="absolute top-4 right-4">
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-primary-cyan to-primary-purple px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
+              Featured
+            </span>
+          </div>
+        )}
+
+        {/* Hover Overlay */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="absolute inset-0 bg-gradient-to-t from-primary-cyan/20 via-primary-purple/10 to-transparent"
+        />
+      </div>
+
+      {/* Project Content - Flexible content area */}
+      <div className="flex flex-1 flex-col p-6">
+        {/* Title */}
+        <div className="mb-4 flex items-start gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary-cyan/25 bg-gradient-to-br from-primary-cyan/15 to-primary-purple/15">
+            <Code2 size={24} className="text-primary-cyan" />
+          </div>
+          <h3 className="flex-1 font-heading text-lg font-bold leading-tight text-text-primary transition-colors group-hover:text-primary-cyan">
+            {project.title}
+          </h3>
+        </div>
+
+        {/* Description - Flexible but controlled */}
+        <div className="mb-6 flex-1">
+          <p className="text-sm leading-relaxed text-text-secondary">
+            {project.description}
+          </p>
+        </div>
+
+        {/* Tech Stack - Flexible wrapping */}
+        <div className="mb-6 flex flex-wrap gap-2">
+          {(project.techTags || []).map((tech, i) => (
+            <span
+              key={i}
+              className="rounded-lg border border-primary-cyan/20 bg-gradient-to-r from-primary-cyan/10 to-primary-purple/10 px-2.5 py-1 text-xs font-medium text-primary-cyan"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Action Buttons - Always at bottom */}
+        <div className="mt-auto flex gap-3">
+          <a
+            href={project.liveUrl || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/btn relative flex-1 overflow-hidden rounded-lg px-4 py-3 text-center text-sm font-semibold text-background transition-all duration-300 hover:scale-[1.02]"
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-primary-cyan via-primary-purple to-primary-cyan bg-[length:200%_100%] animate-gradient-x" />
+            <span className="relative z-10 inline-flex items-center justify-center gap-2">
+              <ExternalLink size={14} />
+              Live Demo
+            </span>
+          </a>
+          <a
+            href={project.githubUrl || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/btn flex-1 rounded-lg border border-border px-4 py-3 text-center text-sm font-semibold transition-all duration-300 hover:scale-[1.02] hover:border-primary-cyan"
+          >
+            <span className="inline-flex items-center justify-center gap-2 text-text-primary transition-colors group-hover/btn:text-primary-cyan">
+              <Github size={14} />
+              Code
+            </span>
+          </a>
+        </div>
+      </div>
+    </motion.article>
+  );
+};
+
 // ============ COMPONENT ============
 
 const SinglePagePortfolio: React.FC = () => {
@@ -402,8 +416,19 @@ const SinglePagePortfolio: React.FC = () => {
   const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const [activeSection, setActiveSection] = useState('home');
+  
+  // Enhanced projects state
+  const [selectedCategory, setSelectedCategory] = useState('SaaS');
+
+  // Filter projects based on selected category
+  const filteredProjects = selectedCategory === 'All' 
+    ? featuredProjects 
+    : featuredProjects.filter(project => project.category === selectedCategory);
+
+  // Custom styles for gradient borders (replacing inline styles)
+  const gradientBorderStyle = {
+    background: 'linear-gradient(#0a0a0f, #0a0a0f) padding-box, linear-gradient(135deg, #00d9ff, #a855f7) border-box'
+  };
   
   // Contact form state
   const [formData, setFormData] = useState({
@@ -444,14 +469,14 @@ const SinglePagePortfolio: React.FC = () => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 500);
       
-      // Detect active section
+      // Detect active section for future use
       const sections = ['home', 'about', 'skills', 'experience', 'projects', 'services', 'contact'];
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
           if (rect.top <= 100) {
-            setActiveSection(section);
+            // setActiveSection(section); // Commented out for future use
             break;
           }
         }
@@ -502,57 +527,6 @@ const SinglePagePortfolio: React.FC = () => {
     setFormError(null);
   };
 
-  const cycleProject = (direction: 'prev' | 'next') => {
-    if (featuredProjects.length === 0) return;
-
-    setCurrentProjectIndex((prev) => {
-      if (direction === 'next') {
-        return (prev + 1) % featuredProjects.length;
-      }
-
-      return (prev - 1 + featuredProjects.length) % featuredProjects.length;
-    });
-  };
-
-  useEffect(() => {
-    if (featuredProjects.length === 0) return;
-    if (currentProjectIndex <= featuredProjects.length - 1) return;
-
-    setCurrentProjectIndex(0);
-  }, [featuredProjects.length, currentProjectIndex]);
-
-  useEffect(() => {
-    if (featuredProjects.length <= 1) return;
-
-    const desktopQuery = window.matchMedia('(min-width: 1024px)');
-    let intervalId: number | null = null;
-
-    const setupAutoplay = () => {
-      if (intervalId !== null) {
-        window.clearInterval(intervalId);
-        intervalId = null;
-      }
-
-      if (desktopQuery.matches) {
-        intervalId = window.setInterval(() => {
-          setCurrentProjectIndex((prev) => (prev + 1) % featuredProjects.length);
-        }, 5500);
-      }
-    };
-
-    setupAutoplay();
-    desktopQuery.addEventListener('change', setupAutoplay);
-
-    return () => {
-      if (intervalId !== null) {
-        window.clearInterval(intervalId);
-      }
-      desktopQuery.removeEventListener('change', setupAutoplay);
-    };
-  }, [featuredProjects.length]);
-
-  const activeProject = featuredProjects[currentProjectIndex];
-
   // Rotating Title Component
   const titles = [
     'Full Stack Developer',
@@ -562,38 +536,19 @@ const SinglePagePortfolio: React.FC = () => {
     'Software Developer'
   ];
   
-  const RotatingTitle = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % titles.length);
-      }, 2500);
-      return () => clearInterval(interval);
-    }, []);
-    
-    return (
-      <div className="h-8 overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={currentIndex}
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -30, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="text-xl md:text-2xl text-text-primary font-heading font-bold block"
-          >
-            {titles[currentIndex]}
-          </motion.span>
-        </AnimatePresence>
-      </div>
-    );
-  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % titles.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen">
       {/* ==================== HERO SECTION ==================== */}
-      <section id="home" className="relative min-h-0 lg:min-h-[calc(100vh-80px)] pt-0 flex items-start justify-center overflow-hidden">
+      <section id="home" className="relative min-h-screen lg:min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 z-0">
           {/* Grid pattern */}
@@ -618,12 +573,12 @@ const SinglePagePortfolio: React.FC = () => {
           <span className="code-float code-float-16 text-primary-purple/20">{'/**/'}</span>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-4 pt-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-6 sm:py-8 md:py-12 max-md:py-4">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left content */}
-            <div className="text-center lg:text-left order-1 lg:order-1">
+            <div className="text-center lg:text-left order-1 lg:order-1 w-full">
               <ScrollReveal animation="fade-up" delay={50}>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary-cyan/10 to-primary-purple/10 border border-primary-cyan/20 mb-4 backdrop-blur-sm">
+                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-primary-cyan/10 to-primary-purple/10 border border-primary-cyan/20 mb-4 sm:mb-6 backdrop-blur-sm">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
@@ -633,13 +588,13 @@ const SinglePagePortfolio: React.FC = () => {
               </ScrollReveal>
               
               <ScrollReveal animation="fade-up" delay={100}>
-                <p className="text-primary-cyan text-lg md:text-xl mb-1 font-medium tracking-wide">
+                <p className="text-primary-cyan text-lg sm:text-xl md:text-2xl mb-2 font-medium tracking-wide">
                   Hello, I'm
                 </p>
               </ScrollReveal>
               
               <ScrollReveal animation="zoom-in" delay={150}>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-black mb-3 leading-none">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-black mb-3 sm:mb-4 leading-tight">
                   <span className="gradient-text-animated">Naitik</span>
                   <br />
                   <span className="gradient-text-animated" style={{ animationDelay: '0.5s' }}>Maisuriya</span>
@@ -647,44 +602,59 @@ const SinglePagePortfolio: React.FC = () => {
               </ScrollReveal>
               
               <ScrollReveal animation="fade-up" delay={200}>
-                <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-cyan/20 to-primary-purple/20 border border-primary-cyan/30 flex items-center justify-center">
+                <div className="flex items-center justify-center lg:justify-start gap-2 mb-4 sm:mb-6">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary-cyan/20 to-primary-purple/20 border border-primary-cyan/30 flex items-center justify-center">
                     <Terminal className="text-primary-cyan" size={20} />
                   </div>
-                  <div className="h-6 w-px bg-gradient-to-b from-transparent via-primary-cyan/50 to-transparent" />
-                  <RotatingTitle />
+                  <div className="h-6 sm:h-8 w-px bg-gradient-to-b from-transparent via-primary-cyan/50 to-transparent" />
+                  <div className="h-8 sm:h-10 overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={currentIndex}
+                        initial={{ y: 30, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -30, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        className="text-lg sm:text-xl md:text-2xl text-text-primary font-heading font-bold block"
+                      >
+                        {titles[currentIndex]}
+                      </motion.span>
+                    </AnimatePresence>
+                  </div>
                 </div>
               </ScrollReveal>
               
               <ScrollReveal animation="fade-up" delay={250}>
-                <div className="max-w-xl mb-6 space-y-3">
-                  <p className="text-base md:text-lg text-text-secondary leading-relaxed break-words">
-                    I craft <span className="text-primary-cyan font-semibold">scalable</span> and <span className="text-primary-purple font-semibold">beautiful</span> web applications.
+                <div className="max-w-2xl mb-6 sm:mb-8 space-y-3 sm:space-y-4 mx-auto lg:mx-0">
+                  <p className="text-base sm:text-lg md:text-xl text-text-secondary leading-relaxed">
+                    I craft <span className="text-primary-cyan font-semibold">scalable</span> and <span className="text-primary-purple font-semibold">beautiful</span> web applications that deliver exceptional user experiences.
                   </p>
 
-                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                    <span className="text-text-secondary text-sm md:text-base">Specialized in</span>
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-[#61DAFB]/10 text-[#61DAFB] text-xs sm:text-sm font-medium whitespace-nowrap">React</span>
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-[#68A063]/10 text-[#68A063] text-xs sm:text-sm font-medium whitespace-nowrap">Node.js</span>
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-white/10 text-white text-xs sm:text-sm font-medium whitespace-nowrap">Next.js</span>
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-[#336791]/10 text-[#336791] text-xs sm:text-sm font-medium whitespace-nowrap">PostgreSQL</span>
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 py-2">
+                    <span className="text-text-secondary text-sm sm:text-base md:text-lg font-medium">Specialized in</span>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      <span className="inline-flex items-center px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-[#61DAFB]/10 text-[#61DAFB] text-xs sm:text-sm font-medium">React</span>
+                      <span className="inline-flex items-center px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-[#68A063]/10 text-[#68A063] text-xs sm:text-sm font-medium">Node.js</span>
+                      <span className="inline-flex items-center px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-white/10 text-white text-xs sm:text-sm font-medium">Next.js</span>
+                      <span className="inline-flex items-center px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-[#336791]/10 text-[#336791] text-xs sm:text-sm font-medium">PostgreSQL</span>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
               
               <ScrollReveal animation="fade-up" delay={300}>
-                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                <div className="flex flex-col gap-3 mb-6 sm:mb-8 lg:flex-row lg:items-center lg:justify-start lg:gap-4 items-center">
                   <button 
                     onClick={() => scrollToSection('contact')} 
-                    className="group relative px-6 py-3 rounded-xl text-background font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95"
+                    className="group relative px-5 py-2.5 rounded-xl text-background font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 w-48 sm:w-auto lg:w-auto lg:px-6 lg:py-3 lg:text-sm"
                   >
                     {/* Animated gradient background */}
                     <div className="absolute inset-0 bg-gradient-to-r from-primary-cyan via-primary-purple to-primary-cyan bg-[length:200%_100%] animate-gradient-x" />
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary-cyan to-primary-purple blur-xl" />
+                    {/* Glow effect - mobile optimized */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary-cyan to-primary-purple blur-sm lg:blur-xl" />
                     {/* Shine effect on hover */}
                     <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
-                    <span className="relative z-10 flex items-center gap-2">
+                    <span className="relative z-10 flex items-center justify-center gap-2 lg:justify-normal">
                       Let's Talk
                       <ArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" size={16} />
                     </span>
@@ -693,64 +663,50 @@ const SinglePagePortfolio: React.FC = () => {
                   <a 
                     href="/resume.pdf" 
                     download 
-                    className="group relative px-6 py-3 rounded-xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 border-2 border-transparent bg-clip-padding"
-                    style={{ background: 'linear-gradient(#0a0a0f, #0a0a0f) padding-box, linear-gradient(135deg, #00d9ff, #a855f7) border-box' }}
+                    className="group relative px-5 py-2.5 rounded-xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 border-2 border-transparent bg-clip-padding w-48 sm:w-auto lg:w-auto lg:px-6 lg:py-3 lg:text-sm"
+                    style={gradientBorderStyle}
                   >
-                    {/* Glow effect */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-gradient-to-r from-primary-cyan to-primary-purple rounded-xl" />
-                    {/* Shine effect on hover */}
                     <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
-                    <span className="relative z-10 flex items-center gap-2 text-text-primary group-hover:text-primary-cyan transition-colors duration-300">
+                    <span className="relative z-10 flex items-center justify-center gap-2 text-text-primary group-hover:text-primary-cyan transition-colors duration-300 lg:justify-normal">
                       <Download className="group-hover:-translate-y-0.5 transition-transform duration-300" size={16} />
                       Download CV
                     </span>
                   </a>
                 </div>
               </ScrollReveal>
-              
-              {/* Quick stats - after buttons */}
-              <ScrollReveal animation="fade-up" delay={350}>
-                <div className="flex items-center justify-center lg:justify-start gap-6 mt-6">
-                  {[
-                    { value: '1+', label: 'Years Exp.' },
-                    { value: '10+', label: 'Projects' },
-                    { value: '15+', label: 'Technologies' },
-                  ].map((stat, i) => (
-                    <div key={i} className="text-center">
-                      <div className="text-2xl font-bold gradient-text">{stat.value}</div>
-                      <div className="text-text-secondary text-xs">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </ScrollReveal>
             </div>
             
-            {/* Right side - Code illustration (Original) */}
-            <ScrollReveal animation="fade-left" delay={300} className="order-2 lg:order-2 w-full max-w-md sm:max-w-xl mx-auto lg:max-w-none">
+            {/* Right side - Code illustration (Mobile/Tablet Optimized Only) */}
+            <ScrollReveal animation="fade-left" delay={300} className="order-2 lg:order-2 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto lg:max-w-none mt-8 lg:mt-0">
               <div className="relative">
-                <div className="code-terminal">
+                <div className="code-terminal scale-70 sm:scale-80 md:scale-95 lg:scale-100 origin-center overflow-hidden">
                   <div className="terminal-header">
                     <div className="terminal-dots">
                       <span className="dot dot-red" />
                       <span className="dot dot-yellow" />
                       <span className="dot dot-green" />
                     </div>
-                    <span className="text-text-secondary text-sm">app.ts</span>
+                    <span className="text-text-secondary text-xs sm:text-sm">app.ts</span>
                   </div>
-                  <div className="terminal-body">
-                    <pre className="text-sm">
+                  <div className="terminal-body overflow-hidden">
+                    <pre className="text-xs sm:text-sm leading-tight">
                       <code>
-                        <span className="code-comment">// 🚀 Building the future, one line at a time</span>
-                        {'\n'}<span className="code-keyword">import</span> {'{ '}<span className="code-variable">MERN</span>, <span className="code-variable">Next.js</span>, <span className="code-variable">TypeScript</span>{' }'} <span className="code-keyword">from</span> <span className="code-string">'skills'</span>;
+                        <span className="code-comment">// 🚀 Building the future</span>
+                        {'\n'}<span className="code-keyword">import</span> {'{ '}
+                        <span className="code-variable">React</span>
+                        {' '}<span className="code-variable">Node</span>
+                        {' '}<span className="code-variable">TS</span>
+                        {' }'} <span className="code-keyword">from</span> <span className="code-string">'skills'</span>;
                         {'\n'}
-                        {'\n'}<span className="code-keyword">class</span> <span className="code-class">FullStackDeveloper</span> {'{'}
-                        {'\n'}  <span className="code-property">name</span> = <span className="code-string">"Naitik Maisuriya"</span>;
-                        {'\n'}  <span className="code-property">experience</span> = <span className="code-string">"1+ years"</span>;
+                        {'\n'}<span className="code-keyword">class</span> <span className="code-class">Dev</span> {'{'}
+                        {'\n'}  <span className="code-property">name</span> = <span className="code-string">"Naitik"</span>;
+                        {'\n'}  <span className="code-property">role</span> = <span className="code-string">"Full Stack"</span>;
                         {'\n'}
-                        {'\n'}  <span className="code-method">buildApp</span>(<span className="code-variable">idea</span>) {'{'}
+                        {'\n'}  <span className="code-method">build</span>(<span className="code-variable">idea</span>) {'{'}
                         {'\n'}    <span className="code-keyword">return</span> <span className="code-variable">idea</span>
                         {'\n'}      .<span className="code-method">design</span>()
-                        {'\n'}      .<span className="code-method">develop</span>()
+                        {'\n'}      .<span className="code-method">code</span>()
                         {'\n'}      .<span className="code-method">deploy</span>();
                         {'\n'}  {'}'}
                         {'\n'}{'}'}
@@ -910,7 +866,7 @@ const SinglePagePortfolio: React.FC = () => {
                   href="/resume.pdf" 
                   download 
                   className="group relative px-6 py-3 rounded-xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 border-2 border-transparent bg-clip-padding"
-                  style={{ background: 'linear-gradient(#0a0a0f, #0a0a0f) padding-box, linear-gradient(135deg, #00d9ff, #a855f7) border-box' }}
+                  style={gradientBorderStyle}
                 >
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-gradient-to-r from-primary-cyan to-primary-purple rounded-xl" />
                   <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
@@ -1130,429 +1086,75 @@ const SinglePagePortfolio: React.FC = () => {
       </section>
 
       {/* ==================== PROJECTS SECTION ==================== */}
-      <section id="projects" className="section-container gradient-orb-bg">
+      <section
+        id="projects"
+        className="section-container gradient-orb-bg scroll-mt-24"
+        aria-labelledby="projects-heading"
+      >
         <ScrollReveal animation="fade-up">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold gradient-text mb-4 md:mb-6">
+          <div className="text-center mb-8 md:mb-12 lg:mb-14">
+            <h2
+              id="projects-heading"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold gradient-text mb-4 md:mb-6"
+            >
               Featured Projects
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-text-secondary px-2">
-              Check out some of my recent work
+            <p className="text-base sm:text-lg md:text-xl text-text-secondary px-2 max-w-3xl mx-auto leading-relaxed">
+              Explore my latest work—interactive demos, clean code, and real-world solutions. 
+              Built with modern tech and designed for exceptional user experiences.
             </p>
           </div>
         </ScrollReveal>
 
+        {/* Filter Pills */}
+        <ScrollReveal animation="fade-up" delay={200}>
+          <div className="flex justify-center mb-8 md:mb-10">
+            <div className="flex flex-wrap justify-center gap-2 max-w-2xl">
+              {['SaaS', 'Web App', 'Website', 'Mobile', 'All'].map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-primary-cyan to-primary-purple text-white shadow-lg shadow-primary-purple/25'
+                      : 'bg-cardBg/60 border border-border/55 text-text-secondary hover:text-text-primary hover:border-primary-cyan/35'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+
         {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="spinner" />
+          <div className="flex justify-center py-16">
+            <div className="flex flex-col items-center gap-4">
+              <Loader2 className="animate-spin text-primary-cyan" size={32} />
+              <p className="text-text-secondary">Loading amazing projects...</p>
+            </div>
+          </div>
+        ) : filteredProjects.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="max-w-md mx-auto">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-cyan/20 to-primary-purple/20 border border-primary-cyan/30 flex items-center justify-center">
+                <Code2 className="text-primary-cyan" size={32} />
+              </div>
+              <p className="text-text-secondary mb-4">
+                {selectedCategory === 'All' ? 'No projects available yet.' : 'No projects found in this category.'}
+              </p>
+              {selectedCategory !== 'All' && (
+                <p className="text-text-secondary text-sm">Try selecting a different category or "All" to see all projects.</p>
+              )}
+            </div>
           </div>
         ) : (
-          <div className="relative z-10 px-2 md:px-4">
-            {/* Responsive: 1 card on mobile/tablet, 2 cards on desktop */}
-            <div className="w-full max-w-6xl mx-auto">
-              {/* Mobile/Tablet: show 1 card */}
-              <div className="block lg:hidden">
-                <AnimatePresence mode="wait">
-                  {activeProject && (
-                    <motion.article
-                      key={activeProject.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.35, ease: 'easeOut' }}
-                      drag="x"
-                      dragConstraints={{ left: 0, right: 0 }}
-                      dragElastic={0.18}
-                      onDragEnd={(_, info) => {
-                        if (info.offset.x <= -60) {
-                          cycleProject('next');
-                        }
-                        if (info.offset.x >= 60) {
-                          cycleProject('prev');
-                        }
-                      }}
-                      className="group h-[31rem] sm:h-[32rem] md:h-[34rem]"
-                    >
-                      {/* ...existing code for single card... */}
-                      <div className="relative h-full">
-                        <div className="absolute -inset-[2px] bg-gradient-to-r from-primary-cyan via-primary-purple to-primary-cyan rounded-xl sm:rounded-2xl opacity-30 blur-sm pointer-events-none" />
-                        <div className="relative h-full bg-gradient-to-b from-cardBg to-[#0f0f1a] rounded-xl sm:rounded-2xl overflow-hidden border border-border/50 flex flex-col">
-                          {/* ...existing code for card content... */}
-                          {/* ...copy from previous single card... */}
-                          <div className="aspect-video overflow-hidden relative">
-                            <img
-                              src={activeProject.thumbnail || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop`}
-                              alt={activeProject.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                              loading="lazy"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-cardBg via-cardBg/50 to-transparent pointer-events-none" />
-                            <div className="absolute top-2 left-2">
-                              <span className="px-2 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full bg-cardBg/90 text-primary-cyan backdrop-blur-md border border-primary-cyan/30">
-                                {activeProject.category}
-                              </span>
-                            </div>
-                            {activeProject.featured && (
-                              <div className="absolute top-2 right-2">
-                                <span className="px-2 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full bg-gradient-to-r from-primary-cyan to-primary-purple text-white">
-                                  ⭐ Featured
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                          <div className="p-4 sm:p-5 flex-1 flex flex-col">
-                            <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3 min-h-[3.25rem] sm:min-h-[3.75rem]">
-                              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary-cyan/20 to-primary-purple/20 flex items-center justify-center flex-shrink-0 border border-primary-cyan/20">
-                                <Code2 size={16} className="text-primary-cyan sm:w-5 sm:h-5" />
-                              </div>
-                              <h3 className="text-sm sm:text-base font-heading font-bold group-hover:text-primary-cyan transition-colors leading-tight line-clamp-2">
-                                {activeProject.title}
-                              </h3>
-                            </div>
-                            <p className="text-text-secondary text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed line-clamp-4 sm:line-clamp-5 h-[4.8rem] sm:h-[5.6rem] overflow-hidden">
-                              {activeProject.description}
-                            </p>
-                            <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-4 h-[3.5rem] sm:h-[4rem] overflow-hidden content-start">
-                              {(activeProject.techTags || []).slice(0, 5).map((tech, i) => (
-                                <span
-                                  key={i}
-                                  className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium rounded-md bg-gradient-to-r from-primary-cyan/10 to-primary-purple/10 text-primary-cyan border border-primary-cyan/20"
-                                >
-                                  {tech}
-                                </span>
-                              ))}
-                              {(activeProject.techTags || []).length > 5 && (
-                                <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium rounded-md bg-border text-text-secondary">
-                                  +{(activeProject.techTags || []).length - 5}
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex-1" />
-                            <div className="flex items-center gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-border/50">
-                              <a
-                                href={activeProject.liveUrl || '#'}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1 group/btn relative px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-background font-semibold text-[10px] sm:text-xs overflow-hidden transition-all duration-300 hover:scale-[1.02]"
-                              >
-                                <div className="absolute inset-0 bg-gradient-to-r from-primary-cyan via-primary-purple to-primary-cyan bg-[length:200%_100%] animate-gradient-x" />
-                                <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-1.5">
-                                  <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5" />
-                                  Live Demo
-                                </span>
-                              </a>
-                              <a
-                                href={activeProject.githubUrl || '#'}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1 group/btn relative px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg font-semibold text-[10px] sm:text-xs overflow-hidden transition-all duration-300 hover:scale-[1.02] border border-border hover:border-primary-cyan"
-                              >
-                                <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-1.5 text-text-primary group-hover/btn:text-primary-cyan transition-colors">
-                                  <Github size={12} className="sm:w-3.5 sm:h-3.5" />
-                                  GitHub
-                                </span>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.article>
-                  )}
-                </AnimatePresence>
-                {featuredProjects.length > 1 && (
-                  <div className="relative z-30 mt-4 sm:mt-5 flex items-center justify-between gap-3">
-                    <button
-                      type="button"
-                      onClick={() => cycleProject('prev')}
-                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-border bg-cardBg text-text-primary hover:text-primary-cyan hover:border-primary-cyan transition-colors flex items-center justify-center touch-manipulation"
-                      aria-label="Previous project"
-                    >
-                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
-                    </button>
-                    <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border bg-cardBg text-xs sm:text-sm text-text-secondary">
-                      Project <span className="text-primary-cyan font-semibold">{currentProjectIndex + 1}</span> of <span className="text-text-primary font-semibold">{featuredProjects.length}</span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => cycleProject('next')}
-                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-border bg-cardBg text-text-primary hover:text-primary-cyan hover:border-primary-cyan transition-colors flex items-center justify-center touch-manipulation"
-                      aria-label="Next project"
-                    >
-                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
-                  </div>
-                )}
-                {featuredProjects.length > 1 && (
-                  <p className="mt-2 text-center text-[11px] sm:text-xs text-text-secondary">
-                    Swipe or use arrows to browse projects
-                  </p>
-                )}
-              </div>
-              {/* Desktop: show 2 cards side by side */}
-              <div className="hidden lg:flex gap-8 justify-center">
-                {featuredProjects.length > 0 && [0, 1].map((offset) => {
-                  const idx = (currentProjectIndex + offset) % featuredProjects.length;
-                  const project = featuredProjects[idx];
-                  return (
-                    <motion.article
-                      key={project.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.35, ease: 'easeOut' }}
-                      className="group h-[36rem] w-full max-w-xl"
-                    >
-                      <div className="relative h-full">
-                        <div className="absolute -inset-[2px] bg-gradient-to-r from-primary-cyan via-primary-purple to-primary-cyan rounded-3xl opacity-30 blur-sm pointer-events-none" />
-                        <div className="relative h-full bg-gradient-to-b from-cardBg to-[#0f0f1a] rounded-3xl overflow-hidden border border-border/50 flex flex-col">
-                          <div className="aspect-video overflow-hidden relative">
-                            <img
-                              src={project.thumbnail || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop`}
-                              alt={project.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                              loading="lazy"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-cardBg via-cardBg/50 to-transparent pointer-events-none" />
-                            <div className="absolute top-3 left-3">
-                              <span className="px-3 py-1 text-xs font-semibold rounded-full bg-cardBg/90 text-primary-cyan backdrop-blur-md border border-primary-cyan/30">
-                                {project.category}
-                              </span>
-                            </div>
-                            {project.featured && (
-                              <div className="absolute top-3 right-3">
-                                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-primary-cyan to-primary-purple text-white">
-                                  ⭐ Featured
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                          <div className="p-7 flex-1 flex flex-col">
-                            <div className="flex items-start gap-4 mb-4 min-h-[4.5rem]">
-                              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-cyan/20 to-primary-purple/20 flex items-center justify-center border border-primary-cyan/20 flex-shrink-0">
-                                <Code2 size={20} className="text-primary-cyan" />
-                              </div>
-                              <h3 className="text-2xl font-heading font-bold group-hover:text-primary-cyan transition-colors leading-tight line-clamp-2">
-                                {project.title}
-                              </h3>
-                            </div>
-                            <p className="text-text-secondary text-base mb-5 leading-relaxed line-clamp-5 h-[8rem] overflow-hidden">
-                              {project.description}
-                            </p>
-                            <div className="flex flex-wrap gap-2 mb-5 h-[5rem] overflow-hidden content-start">
-                              {(project.techTags || []).slice(0, 8).map((tech, i) => (
-                                <span
-                                  key={i}
-                                  className="px-2.5 py-1 text-xs font-medium rounded-md bg-gradient-to-r from-primary-cyan/10 to-primary-purple/10 text-primary-cyan border border-primary-cyan/20"
-                                >
-                                  {tech}
-                                </span>
-                              ))}
-                              {(project.techTags || []).length > 8 && (
-                                <span className="px-2.5 py-1 text-xs font-medium rounded-md bg-border text-text-secondary">
-                                  +{(project.techTags || []).length - 8}
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex-1" />
-                            <div className="flex items-center gap-3 pt-5 border-t border-border/50">
-                              <a
-                                href={project.liveUrl || '#'}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1 group/btn relative px-4 py-2.5 rounded-lg text-background font-semibold text-sm overflow-hidden transition-all duration-300 hover:scale-[1.02]"
-                              >
-                                <div className="absolute inset-0 bg-gradient-to-r from-primary-cyan via-primary-purple to-primary-cyan bg-[length:200%_100%] animate-gradient-x" />
-                                <span className="relative z-10 flex items-center justify-center gap-2">
-                                  <ExternalLink size={14} />
-                                  Live Demo
-                                </span>
-                              </a>
-                              <a
-                                href={project.githubUrl || '#'}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1 group/btn relative px-4 py-2.5 rounded-lg font-semibold text-sm overflow-hidden transition-all duration-300 hover:scale-[1.02] border border-border hover:border-primary-cyan"
-                              >
-                                <span className="relative z-10 flex items-center justify-center gap-2 text-text-primary group-hover/btn:text-primary-cyan transition-colors">
-                                  <Github size={14} />
-                                  GitHub
-                                </span>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.article>
-                  );
-                })}
-                {/* Navigation arrows for desktop */}
-                {featuredProjects.length > 1 && (
-                  <div className="absolute left-0 right-0 -bottom-12 flex items-center justify-center gap-6">
-                    <button
-                      type="button"
-                      onClick={() => cycleProject('prev')}
-                      className="w-12 h-12 rounded-full border border-border bg-cardBg text-text-primary hover:text-primary-cyan hover:border-primary-cyan transition-colors flex items-center justify-center touch-manipulation"
-                      aria-label="Previous project"
-                    >
-                      <ChevronRight className="w-6 h-6 rotate-180" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => cycleProject('next')}
-                      className="w-12 h-12 rounded-full border border-border bg-cardBg text-text-primary hover:text-primary-cyan hover:border-primary-cyan transition-colors flex items-center justify-center touch-manipulation"
-                      aria-label="Next project"
-                    >
-                      <ChevronRight className="w-6 h-6" />
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Desktop: old highlighted carousel kept hidden */}
-            <div className="hidden">
-              <div className="relative">
-                <AnimatePresence mode="wait">
-                  {activeProject && (
-                    <motion.article
-                      key={activeProject.id}
-                      initial={{ opacity: 0, y: 28 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -28 }}
-                      transition={{ duration: 0.45, ease: 'easeOut' }}
-                      className="group"
-                    >
-                      <div className="relative h-full">
-                        <div className="absolute -inset-[2px] bg-gradient-to-r from-primary-cyan via-primary-purple to-primary-cyan rounded-2xl opacity-30 blur-sm pointer-events-none" />
-
-                        <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-b from-cardBg to-[#0f0f1a]">
-                          <div className="grid xl:grid-cols-[1.1fr_1fr]">
-                            <div className="relative aspect-[16/10] xl:aspect-auto xl:min-h-[32rem] overflow-hidden">
-                              <img
-                                src={activeProject.thumbnail || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=700&fit=crop`}
-                                alt={activeProject.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                                loading="lazy"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-cardBg via-cardBg/20 to-transparent pointer-events-none" />
-
-                              <div className="absolute top-4 left-4">
-                                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-cardBg/90 text-primary-cyan backdrop-blur-md border border-primary-cyan/30">
-                                  {activeProject.category}
-                                </span>
-                              </div>
-                              {activeProject.featured && (
-                                <div className="absolute top-4 right-4">
-                                  <span className="px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-primary-cyan to-primary-purple text-white">
-                                    ⭐ Featured
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-
-                            <div className="p-7 xl:p-8 flex flex-col">
-                              <div className="flex items-start gap-3 mb-4">
-                                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary-cyan/20 to-primary-purple/20 flex items-center justify-center border border-primary-cyan/20 flex-shrink-0">
-                                  <Code2 size={20} className="text-primary-cyan" />
-                                </div>
-                                <h3 className="text-2xl font-heading font-bold leading-tight group-hover:text-primary-cyan transition-colors">
-                                  {activeProject.title}
-                                </h3>
-                              </div>
-
-                              <p className="text-text-secondary text-base leading-relaxed mb-6 line-clamp-5">
-                                {activeProject.description}
-                              </p>
-
-                              <div className="flex flex-wrap gap-2 mb-7">
-                                {(activeProject.techTags || []).slice(0, 8).map((tech, i) => (
-                                  <span
-                                    key={i}
-                                    className="px-2.5 py-1 text-xs font-medium rounded-md bg-gradient-to-r from-primary-cyan/10 to-primary-purple/10 text-primary-cyan border border-primary-cyan/20"
-                                  >
-                                    {tech}
-                                  </span>
-                                ))}
-                                {(activeProject.techTags || []).length > 8 && (
-                                  <span className="px-2.5 py-1 text-xs font-medium rounded-md bg-border text-text-secondary">
-                                    +{(activeProject.techTags || []).length - 8}
-                                  </span>
-                                )}
-                              </div>
-
-                              <div className="mt-auto flex items-center gap-3 pt-5 border-t border-border/50">
-                                <a
-                                  href={activeProject.liveUrl || '#'}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex-1 group/btn relative px-4 py-2.5 rounded-lg text-background font-semibold text-sm overflow-hidden transition-all duration-300 hover:scale-[1.02]"
-                                >
-                                  <div className="absolute inset-0 bg-gradient-to-r from-primary-cyan via-primary-purple to-primary-cyan bg-[length:200%_100%] animate-gradient-x" />
-                                  <span className="relative z-10 flex items-center justify-center gap-2">
-                                    <ExternalLink size={14} />
-                                    Live Demo
-                                  </span>
-                                </a>
-                                <a
-                                  href={activeProject.githubUrl || '#'}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex-1 group/btn relative px-4 py-2.5 rounded-lg font-semibold text-sm overflow-hidden transition-all duration-300 hover:scale-[1.02] border border-border hover:border-primary-cyan"
-                                >
-                                  <span className="relative z-10 flex items-center justify-center gap-2 text-text-primary group-hover/btn:text-primary-cyan transition-colors">
-                                    <Github size={14} />
-                                    GitHub
-                                  </span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.article>
-                  )}
-                </AnimatePresence>
-
-                {featuredProjects.length > 1 && (
-                  <div className="relative z-30 mt-6 flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => cycleProject('prev')}
-                        className="w-11 h-11 rounded-full border border-border bg-cardBg text-text-primary hover:text-primary-cyan hover:border-primary-cyan transition-colors flex items-center justify-center touch-manipulation"
-                        aria-label="Previous project"
-                      >
-                        <ChevronRight className="w-5 h-5 rotate-180" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => cycleProject('next')}
-                        className="w-11 h-11 rounded-full border border-border bg-cardBg text-text-primary hover:text-primary-cyan hover:border-primary-cyan transition-colors flex items-center justify-center touch-manipulation"
-                        aria-label="Next project"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      {featuredProjects.map((project, index) => (
-                        <button
-                          key={project.id}
-                          type="button"
-                          onClick={() => setCurrentProjectIndex(index)}
-                          className={`h-2.5 rounded-full transition-all ${
-                            currentProjectIndex === index
-                              ? 'w-10 bg-gradient-to-r from-primary-cyan to-primary-purple'
-                              : 'w-2.5 bg-border hover:bg-primary-cyan/60'
-                          }`}
-                          aria-label={`Go to project ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+            {filteredProjects.map((project, index) => (
+              <ScrollReveal key={project.id} animation="fade-up" delay={index * 100}>
+                <EnhancedProjectCard project={project} index={index} />
+              </ScrollReveal>
+            ))}
           </div>
         )}
       </section>
@@ -1856,7 +1458,7 @@ const SinglePagePortfolio: React.FC = () => {
                 <button 
                   onClick={() => scrollToSection('projects')} 
                   className="group relative px-5 md:px-6 py-2.5 md:py-3 rounded-xl font-semibold text-xs md:text-sm overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 border-2 border-transparent bg-clip-padding w-full sm:w-auto"
-                  style={{ background: 'linear-gradient(#0a0a0f, #0a0a0f) padding-box, linear-gradient(135deg, #00d9ff, #a855f7) border-box' }}
+                  style={gradientBorderStyle}
                 >
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-gradient-to-r from-primary-cyan to-primary-purple rounded-xl" />
                   <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />

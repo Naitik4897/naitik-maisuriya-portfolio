@@ -5,20 +5,6 @@ import gsap from 'gsap';
 // GSAP Scroll Animations Hook
 // ============================================
 
-interface ScrollAnimationOptions {
-  trigger?: string | HTMLElement;
-  start?: string;
-  end?: string;
-  scrub?: boolean | number;
-  pin?: boolean;
-  markers?: boolean;
-  toggleActions?: string;
-  onEnter?: () => void;
-  onLeave?: () => void;
-  onEnterBack?: () => void;
-  onLeaveBack?: () => void;
-}
-
 // Custom hook for scroll-based animations
 export const useScrollAnimation = (
   animationFn: (element: HTMLElement, gsapInstance: typeof gsap) => void,
@@ -47,7 +33,6 @@ export const useParallax = (speed: number = 0.5) => {
   useEffect(() => {
     const handleScroll = () => {
       if (elementRef.current) {
-        const rect = elementRef.current.getBoundingClientRect();
         const scrolled = window.scrollY;
         const yPos = -(scrolled * speed);
         setOffset(yPos);
