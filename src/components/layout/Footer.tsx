@@ -1,18 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Github, Linkedin, Twitter, Mail, Heart } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <footer className="bg-cardBg border-t border-border">
+    <footer className="bg-cardBg border-t border-border relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-2xl font-heading font-bold gradient-text mb-4">
-              Portfolio
+              Naitik Maisuriya
             </h3>
             <p className="text-text-secondary mb-4">
               Full Stack Developer specializing in React, TypeScript, Node.js, and MySQL.
@@ -20,7 +30,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/naiitikmaisuriya"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-text-secondary hover:text-primary-cyan transition-colors"
@@ -29,7 +39,7 @@ const Footer: React.FC = () => {
                 <Github size={24} />
               </a>
               <a
-                href="https://linkedin.com/in/yourusername"
+                href="https://linkedin.com/in/naiitikmaisuriya"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-text-secondary hover:text-primary-cyan transition-colors"
@@ -38,7 +48,7 @@ const Footer: React.FC = () => {
                 <Linkedin size={24} />
               </a>
               <a
-                href="https://twitter.com/yourusername"
+                href="https://twitter.com/naiitikmaisuriya"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-text-secondary hover:text-primary-cyan transition-colors"
@@ -47,7 +57,7 @@ const Footer: React.FC = () => {
                 <Twitter size={24} />
               </a>
               <a
-                href="mailto:your.email@example.com"
+                href="mailto:naitikmaisuriya27@gmail.com"
                 className="text-text-secondary hover:text-primary-cyan transition-colors"
                 aria-label="Email"
               >
@@ -63,24 +73,36 @@ const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" className="text-text-secondary hover:text-primary-cyan transition-colors">
+                <button 
+                  onClick={() => scrollToSection('about')} 
+                  className="text-text-secondary hover:text-primary-cyan transition-colors"
+                >
                   About
-                </Link>
+                </button>
               </li>
               <li>
-                <Link to="/projects" className="text-text-secondary hover:text-primary-cyan transition-colors">
+                <button 
+                  onClick={() => scrollToSection('projects')} 
+                  className="text-text-secondary hover:text-primary-cyan transition-colors"
+                >
                   Projects
-                </Link>
+                </button>
               </li>
               <li>
-                <Link to="/services" className="text-text-secondary hover:text-primary-cyan transition-colors">
+                <button 
+                  onClick={() => scrollToSection('services')} 
+                  className="text-text-secondary hover:text-primary-cyan transition-colors"
+                >
                   Services
-                </Link>
+                </button>
               </li>
               <li>
-                <Link to="/blog" className="text-text-secondary hover:text-primary-cyan transition-colors">
-                  Blog
-                </Link>
+                <button 
+                  onClick={() => scrollToSection('contact')} 
+                  className="text-text-secondary hover:text-primary-cyan transition-colors"
+                >
+                  Contact
+                </button>
               </li>
             </ul>
           </div>

@@ -1,5 +1,4 @@
-import React, { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import LoadingSpinner from './components/ui/LoadingSpinner';
@@ -7,57 +6,51 @@ import WhatsAppButton from './components/WhatsAppButton';
 import { AnimatedBackground, CursorEffect } from './components/effects';
 import { useIsMobile } from './hooks';
 
-// Lazy load pages for better performance
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
-const Skills = lazy(() => import('./pages/Skills'));
-const Experience = lazy(() => import('./pages/Experience'));
-const Projects = lazy(() => import('./pages/Projects'));
-const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
-const Services = lazy(() => import('./pages/Services'));
-const Blog = lazy(() => import('./pages/Blog'));
-const BlogPost = lazy(() => import('./pages/BlogPost'));
-const Certifications = lazy(() => import('./pages/Certifications'));
-const Contact = lazy(() => import('./pages/Contact'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+// Single Page Portfolio
+const SinglePagePortfolio = lazy(() => import('./pages/SinglePagePortfolio'));
 
 function App() {
-  const isMobile = useIsMobile();
+  const isMobileOrTablet = useIsMobile(1024);
+  const [isTouchInput, setIsTouchInput] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  });
+
+  useEffect(() => {
+    const touchQuery = window.matchMedia('(hover: none), (pointer: coarse)');
+
+    const updateTouchInput = () => {
+      setIsTouchInput(touchQuery.matches);
+    };
+
+    updateTouchInput();
+    touchQuery.addEventListener('change', updateTouchInput);
+
+    return () => {
+      touchQuery.removeEventListener('change', updateTouchInput);
+    };
+  }, []);
+
+  const disableCustomCursor = isMobileOrTablet || isTouchInput;
 
   return (
-    <div className="min-h-screen bg-background text-text-primary relative">
+    <div className="min-h-screen bg-background text-text-primary relative overflow-x-hidden">
       {/* Animated Background - always visible */}
       <AnimatedBackground 
-        particleCount={isMobile ? 25 : 50}
+        particleCount={isMobileOrTablet ? 25 : 50}
         enableGrid={true}
         enableParticles={true}
         enableGradientOrbs={true}
       />
       
-      {/* Custom Cursor - disabled on mobile/touch devices */}
-      {!isMobile && <CursorEffect enabled={true} />}
+      {/* Custom Cursor - disabled on mobile and tablet */}
+      {!disableCustomCursor && <CursorEffect enabled={true} />}
       
       <Navbar />
       
       <main className="relative z-10">
         <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/experience" element={<Experience />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:slug" element={<ProjectDetail />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/certifications" element={<Certifications />} />
-            <Route path="/contact" element={<Contact />} />
-            
-            {/* 404 Not Found */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <SinglePagePortfolio />
         </Suspense>
       </main>
       

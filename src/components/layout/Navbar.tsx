@@ -1,30 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useScrollPosition } from '@/hooks';
 
 const navLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
-  { name: 'Experience', path: '/experience' },
-  { name: 'Skills', path: '/skills' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'Services', path: '/services' },
-  { name: 'Blog', path: '/blog' },
-  { name: 'Certifications', path: '/certifications' },
-  { name: 'Contact', path: '/contact' },
+  { name: 'Home', sectionId: 'home' },
+  { name: 'About', sectionId: 'about' },
+  { name: 'Skills', sectionId: 'skills' },
+  { name: 'Experience', sectionId: 'experience' },
+  { name: 'Projects', sectionId: 'projects' },
+  { name: 'Services', sectionId: 'services' },
+  { name: 'Contact', sectionId: 'contact' },
 ];
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
+  const [activeSection, setActiveSection] = useState('home');
   const scrollPosition = useScrollPosition();
   const isScrolled = scrollPosition > 20;
 
-  // Close mobile menu when route changes
+  // Track active section on scroll
   useEffect(() => {
+    const handleScroll = () => {
+      const sections = navLinks.map(link => link.sectionId).reverse();
+      
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
     setIsOpen(false);
-  }, [location.pathname]);
+  };
 
   return (
     <>
@@ -38,18 +64,21 @@ const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <Link to="/" className="text-2xl font-heading font-bold gradient-text">
+            <button 
+              onClick={() => scrollToSection('home')} 
+              className="text-2xl font-heading font-bold gradient-text cursor-pointer"
+            >
               Naitik Maisuriya
-            </Link>
+            </button>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
               {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
+                <button
+                  key={link.sectionId}
+                  onClick={() => scrollToSection(link.sectionId)}
                   className={`text-sm font-medium transition-colors duration-200 relative group ${
-                    location.pathname === link.path
+                    activeSection === link.sectionId
                       ? 'text-primary-cyan'
                       : 'text-text-primary hover:text-primary-cyan'
                   }`}
@@ -57,10 +86,10 @@ const Navbar: React.FC = () => {
                   {link.name}
                   <span
                     className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary-cyan transform origin-left transition-transform duration-200 ${
-                      location.pathname === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                      activeSection === link.sectionId ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                   />
-                </Link>
+                </button>
               ))}
             </div>
 
@@ -85,17 +114,17 @@ const Navbar: React.FC = () => {
         <div className="absolute inset-0 bg-background/95 backdrop-blur-glass pt-20">
           <div className="flex flex-col items-center justify-center space-y-6 py-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
+              <button
+                key={link.sectionId}
+                onClick={() => scrollToSection(link.sectionId)}
                 className={`text-2xl font-heading font-medium transition-colors duration-200 ${
-                  location.pathname === link.path
+                  activeSection === link.sectionId
                     ? 'text-primary-cyan'
                     : 'text-text-primary hover:text-primary-cyan'
                 }`}
               >
                 {link.name}
-              </Link>
+              </button>
             ))}
           </div>
         </div>

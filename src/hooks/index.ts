@@ -4,7 +4,10 @@ import { useState, useEffect } from 'react';
  * Hook to detect mobile devices
  */
 export function useIsMobile(breakpoint: number = 768): boolean {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth < breakpoint;
+  });
 
   useEffect(() => {
     const checkMobile = () => {
@@ -190,3 +193,17 @@ export function useWindowSize() {
 
   return windowSize;
 }
+
+// Export scroll animation hooks
+export {
+  useScrollAnimation,
+  useParallax,
+  useRevealOnScroll,
+  useCountUp,
+  useStaggerReveal,
+  useHorizontalScroll,
+  useTextSplitAnimation,
+  useMagnetic,
+  useScrollProgress,
+  useTilt
+} from './useScrollAnimations';
